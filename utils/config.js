@@ -7,7 +7,7 @@ const config = () => {
   // if (mongoEnabled) return loadConfigFromDB();
   return {
     '-1001262375149': {
-      enableDeleteSystemMessages: true,
+      enableDeleteSystemMessages: false,
       enableLinks: false,
       enableValidateUsers: false,
       enableRotate: false,
@@ -17,7 +17,7 @@ const config = () => {
     },
     // defaults
     '0': {
-      enableDeleteSystemMessages: true,
+      enableDeleteSystemMessages: false,
       enableLinks: false,
       enableValidateUsers: false,
       enableRotate: false,
