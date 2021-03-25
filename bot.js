@@ -16,7 +16,7 @@ const excel = require('./controllers/excel');
 const UserService = require('./services/user');
 
 const config = require('./utils/config');
-const rotate = require('./utils/onText/rotate');
+// const rotate = require('./utils/onText/rotate');
 
 
 databaseController.initDb();
@@ -62,10 +62,11 @@ bot.on('message', (msg) => {
     UserService.saveUser(msg.from.id, msg.from.username);
 });
 
-bot.onText(/^\/rotar (.+)/, (msg, match) => {
+/*bot.onText(/^\/rotar (.+)/, (msg, match) => {
   if (config.isEnabledFor('enableRotate', msg.chat.id)) 
     rotate.execute(bot, msg, match);
 });
+*/
 
 // Sends group links
 bot.onText(/^\/links/,(msg) => {
