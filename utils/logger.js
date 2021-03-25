@@ -1,5 +1,6 @@
 const { createLogger, format, transports } = require('winston');
-const { MongoDB } = require('winston-mongodb');
+const winston = require('winston');
+require('winston-mongodb');
 
 const { combine, timestamp, printf } = format;
 
@@ -15,7 +16,7 @@ const logger = createLogger({
     new transports.File({ filename: 'log.log', level: 'warn' }),
     new transports.File({ filename: 'info.log', level: 'info' }),
     new transports.Console(),
-    new MongoDB({db : process.env.DATABASE_URL , collection : 'log', level : 'warn'}),
+    new winston.transports.MongoDB({collection : 'log', level : 'warn', db : process.env.DATABASE_URL , options:{useUnifiedTopology: true}}),
   ],
 });
 module.exports = logger;
