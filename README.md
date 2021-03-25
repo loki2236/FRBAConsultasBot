@@ -12,4 +12,4 @@ Frankly, we're mostly doing this so the kids can have some code fun, but also:
 
 ## Contributing
 
-If you wanna contribute, you should probably be in our Telegram dev chat. Ping @Loki2236 to get in there and check out the project [wiki](https://github.com/RRafer/FRBAConsultasBot/wiki) for instructions on how to develop!
+If you wanna contribute, you should probably be in our Telegram dev chat. Ping @Loki2236 to get in there and check out the project [wiki](https://github.com/Loki2236/FRBAConsultasBot/wiki) for instructions on how to develop!
