@@ -7,37 +7,37 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "eslint-plugin-react": "^7.19.0",
-    "moment": "^2.24.0",
-    "mongodb": "^3.5.5",
-    "mongoose": "^5.9.7",
-    "node-telegram-bot-api": "^0.40.0",
+    "eslint-plugin-react": "^7.23.0",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.2",
+    "node-telegram-bot-api": "^0.51.0",
     "request": "^2.88.2",
-    "sharp": "^0.25.2",
-    "uuid": "^3.4.0",
-    "winston": "^3.2.1",
-    "winston-mongodb": "^5.0.1"
+    "sharp": "^0.27.2",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3",
+    "winston-mongodb": "^5.0.7"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/RRafer/FRBAConsultasBot.git"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.7.8",
-    "@types/node": "^13.11.0",
-    "eslint": "^6.8.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.1.2"
+    "@types/mongoose": "^5.10.4",
+    "@types/node": "^14.14.35",
+    "eslint": "^7.22.0",
+    "husky": "^5.2.0",
+    "lint-staged": "^10.5.4",
+    "mocha": "^8.3.2"
   },
   "scripts": {
-    "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run pretest"
-    }
+    "prepare": "husky install",
+    "test": "mocha"
   },
   "lint-staged": {
-    "*.js": ["./node_modules/.bin/eslint — fix", "git add"]
+    "*.js": "eslint --cache --fix"
+  },
+  "mocha": {
+    "ui": "tdd"
   }
 }
