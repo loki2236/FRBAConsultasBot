@@ -13,8 +13,8 @@ const logger = createLogger({
   defaultMeta: { service: 'user-service' },
   transports: [
     // - Write to all logs with level `info` and below to `combined.log` 
-    new transports.File({ filename: 'log.log', level: 'warn' }),
-    new transports.File({ filename: 'info.log', level: 'info' }),
+    new transports.File({ filename: './logs/log.log', level: 'warn' }),
+    new transports.File({ filename: './logs/info.log', level: 'info' }),
     new transports.Console(),
     new winston.transports.MongoDB({collection : 'log', level : 'warn', db : process.env.DATABASE_URL , options:{useUnifiedTopology: true}}),
   ],
