@@ -3,6 +3,7 @@
 // Start the DB before loading config
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
+const https = require('https');
 
 const databaseController = require('./controllers/database');
 const privateController = require('./controllers/private');
@@ -16,6 +17,8 @@ const excel = require('./controllers/excel');
 const UserService = require('./services/user');
 
 const config = require('./utils/config');
+const imgur = require('imgur-node-api');
+var jimp = require('jimp');
 // const rotate = require('./utils/onText/rotate');
 
 
@@ -47,7 +50,7 @@ bot.on('message', (msg) => {
   if(config.isEnabledFor('enableValidateUsers', msg.chat.id) && (msg.new_chat_members !== undefined)){
     bot.emit('new_member', msg);
   }
-  
+
   // Deletes messages from peoplo Joining/Leaving the group
   if (config.isEnabledFor('enableDeleteSystemMessages', msg.chat.id) && 
   (msg.new_chat_members !== undefined || msg.left_chat_member !== undefined)){
@@ -56,22 +59,22 @@ bot.on('message', (msg) => {
       logger.error(`Error deleting message: ${e}`);
     });
   }
-  
+
   // Save user into DB
-  if(msg.from.username) 
+  if(msg.from.username)
     UserService.saveUser(msg.from.id, msg.from.username);
 });
 
 /*bot.onText(/^\/rotar (.+)/, (msg, match) => {
-  if (config.isEnabledFor('enableRotate', msg.chat.id)) 
+  if (config.isEnabledFor('enableRotate', msg.chat.id))
     rotate.execute(bot, msg, match);
 });
 */
 
 // Sends group links
 bot.onText(/^\/links/,(msg) => {
-  if (config.isEnabledFor('enableLinks', msg.chat.id)) 
-    linksController.sendLinks(bot, msg);		
+  if (config.isEnabledFor('enableLinks', msg.chat.id))
+    linksController.sendLinks(bot, msg);
 });
 
 // Nuking users from All groups
@@ -82,14 +85,14 @@ bot.onText(/^\/nuke/,(msg) => {
 
 // De nuking users
 bot.onText(/^\/denuke/,(msg) => {
-  if (config.isEnabledFor('enableNuke', msg.chat.id)) 
+  if (config.isEnabledFor('enableNuke', msg.chat.id))
     denuke.denuke(bot, msg);
 });
 
 
 // LMGTFY
 bot.onText(/^\/google (.+)/ , (msg, match) => {
-  if (config.isEnabledFor('enableGoogle', msg.chat.id)) 
+  if (config.isEnabledFor('enableGoogle', msg.chat.id))
     bot.sendMessage(msg.chat.id, `https://lmgtfy.com/?q=${encodeURIComponent(match[1])}`, {reply_to_message_id: msg.message_id});
 });
 
@@ -176,3 +179,40 @@ bot.on('new_member', (msg) => {
 // bot.onText(/[\s\S]+/g, mongo.insertMessage);
 // RemindMe
 // bot.onText(/^\/remindme [0-9]+ (d|h|m|s|w)( .*)?/, (msg, match) => onText.remindme(bot, msg, match));
+
+//Para testing con bot propio
+/*bot.onText(/^\/id/, (msg) => {
+  bot.sendMessage(msg.chat.id, `El id de tu chat es: ${msg.chat.id}`);
+});*/
+
+
+bot.onText(/^\/rotate/, (msg) => {
+  var chatId = msg.chat.id;
+
+  if (msg.reply_to_message == undefined){
+      return;
+  }
+
+  var photo = msg.reply_to_message.photo[2].file_id;
+
+  bot.getFileLink(photo).then(link => {
+    var clientId = 'ff1032c0a1c1eed'
+
+    imgur.setClientID(clientId)
+    imgur.upload(link, async function (err, res) {
+      if(err){
+        console.log("error uploading image: ", err);
+        return;
+      }
+      var link = res.data.link;
+
+      jimp.read(link).then(image => {
+        image.rotate(90);
+        image.getBufferAsync(jimp.AUTO).then(buffer => {
+          bot.sendPhoto(chatId, buffer, {reply_to_message_id: msg.reply_to_message.message_id})
+            .catch(err => console.log("error sending photo: ", err));
+        }).catch(err => console.log("error getting buffer: ", err));
+      }).catch(err => console.log("error reading image by jimp: ", err));
+    });
+  });
+});

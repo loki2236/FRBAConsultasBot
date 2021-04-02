@@ -1,6 +1,6 @@
 /**
  * Returns an object with config for each chat
- * @param {boolean} mongoEnabled 
+ * @param {boolean} mongoEnabled
  * @returns {Object}
  */
 const config = () => {
@@ -18,10 +18,10 @@ const config = () => {
     // defaults
     '0': {
       enableDeleteSystemMessages: false,
-      enableLinks: false,
+      enableLinks: true,
       enableValidateUsers: false,
-      enableRotate: false,
-      enableGoogle: false,
+      enableRotate: true,
+      enableGoogle: true,
       enableNuke: true,
       enableExcel: true,
     },
@@ -34,8 +34,8 @@ const config = () => {
 
 /**
  * Check if feature is enabled for that chatId.
- * @param {string} feature 
- * @param {number} chatId 
+ * @param {string} feature
+ * @param {number} chatId
  * @returns {boolean} If that chat supports that function
  */
 
@@ -46,4 +46,5 @@ module.exports = {
   features: config(false),
   isEnabledFor: isEnabledFor,
   groupIDs: [-1001214086516,-1001262375149,-1001155863433,-1001249368906,-1001387811266,-1001172707925,-1001386498425,-1001205439751,-1001337509181,-1001259839523,-1001289702550,-1001255281308,-1001171982049,-1001203933567,-1001313951685,-1001157259051,-1001290861768,-1001378858456,-1001288012396,-1001485242696,-1001370286549,-1001394632264,-1001286595347,-1001396035324,-1001177806644],
+  chatTestingIDs: [568324647]
 };

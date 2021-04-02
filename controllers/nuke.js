@@ -8,16 +8,16 @@ const { groupIDs } = require('../utils/config');
 const logger = require('../utils/logger');
 
 exports.nuke = async (bot, msg) => {
-	
+
   logger.info('Checking if group is in the list ' + msg.chat.id);
 
   // Check group
   if (!groupIDs.includes(msg.chat.id)) return;
-	
+
   // Get Credentials of invoking user
   logger.info('Getting user credentials');
   if (await utils.isAdmin(bot, msg)) return logger.warn('Could not kick the user, they\'re admin/owner!');
-		
+
   let idToBan = new Array, mentionToBan = new Array;
 
   // Little log to check functionality

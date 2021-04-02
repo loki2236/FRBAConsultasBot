@@ -20,10 +20,10 @@ suite('Testing Suite', function() {
         // defaults
         '0': {
           enableDeleteSystemMessages: false,
-          enableLinks: false,
+          enableLinks: true,
           enableValidateUsers: false,
-          enableRotate: false,
-          enableGoogle: false,
+          enableRotate: true,
+          enableGoogle: true,
           enableNuke: true,
           enableExcel: true,
         },
